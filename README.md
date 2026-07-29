@@ -5,20 +5,28 @@
 - [X] : Boots.
 - [X] : works under Websocket.
 - [X] : Don't require special configs from FluffOS 2019.
-- [X] : No warning or errors
+- [ ] : No warning or errors
 
 Verified live with the shipped `config.deadsouls` as-is and this repo's
 own `driver/` submodule build (`./build.sh && ./run.sh`, no `-DPACKAGE_UIDS`
-override needed beyond what build.sh already sets): zero warnings or
-errors through the full boot log, and a full registration -> auto-wiz
-creator promotion -> look/score/quit playthrough. A GitHub Pages WASM demo
-is also set up (`.github/workflows/pages.yml`) using the shared prebuilt
-fluffos/fluffos WASM release rather than this repo's own driver build;
-see that workflow's and `scripts/pack_for_web.sh`'s comments for the one
-feature gap that trades off (the in-game creator code editor needs the
-modern `ed_start`/`ed_cmd` efuns, which aren't in the shared WASM
-release's driver build -- native `build.sh`/`run.sh` is unaffected and
-remains the right way to do in-game LPC development).
+override needed beyond what build.sh already sets): zero fatal errors
+through the full boot log, and a full registration -> auto-wiz creator
+promotion -> look/score/quit playthrough. The `driver/` submodule is kept
+tracking latest fluffos/fluffos master; as of the current pin this
+surfaces ~600 real compile-time warnings across the mudlib (redeclared
+globals, an illegal `nosave` on a function, argument-count mismatches
+against earlier declarations, etc. -- all pre-existing in the lib, just
+not previously flagged) that a much older driver build didn't catch.
+None of them are fatal -- boot and the full playthrough above are both
+clean -- but they're real and worth someone's attention; not fixed here
+so this note doesn't go stale. A GitHub Pages WASM demo is also set up
+(`.github/workflows/pages.yml`) using the shared prebuilt fluffos/fluffos
+WASM release rather than this repo's own driver build; see that
+workflow's and `scripts/pack_for_web.sh`'s comments for the one feature
+gap that trades off (the in-game creator code editor needs the modern
+`ed_start`/`ed_cmd` efuns, which aren't in the shared WASM release's
+driver build -- native `build.sh`/`run.sh` is unaffected and remains the
+right way to do in-game LPC development).
 
 ## How to test and contribute
 
