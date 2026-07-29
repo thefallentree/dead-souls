@@ -4,8 +4,21 @@
 
 - [X] : Boots.
 - [X] : works under Websocket.
-- [ ] : Don't require special configs from FluffOS 2019.
-- [ ] : No warning or errors
+- [X] : Don't require special configs from FluffOS 2019.
+- [X] : No warning or errors
+
+Verified live with the shipped `config.deadsouls` as-is and this repo's
+own `driver/` submodule build (`./build.sh && ./run.sh`, no `-DPACKAGE_UIDS`
+override needed beyond what build.sh already sets): zero warnings or
+errors through the full boot log, and a full registration -> auto-wiz
+creator promotion -> look/score/quit playthrough. A GitHub Pages WASM demo
+is also set up (`.github/workflows/pages.yml`) using the shared prebuilt
+fluffos/fluffos WASM release rather than this repo's own driver build;
+see that workflow's and `scripts/pack_for_web.sh`'s comments for the one
+feature gap that trades off (the in-game creator code editor needs the
+modern `ed_start`/`ed_cmd` efuns, which aren't in the shared WASM
+release's driver build -- native `build.sh`/`run.sh` is unaffected and
+remains the right way to do in-game LPC development).
 
 ## How to test and contribute
 
@@ -25,6 +38,10 @@ Connect to http://localhost:5555 and play!
 3. Select Creator instead of player.
 4. Set your character name to match the name you used above.
 5. Enjoy!
+
+Alternatively, this mudlib has AUTO_WIZ enabled: during registration
+(after picking a race) it will ask directly whether you want to be a
+player or a creator, no `groups.cfg` edit needed.
 
 ## Screenshot
 
