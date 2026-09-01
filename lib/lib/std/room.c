@@ -944,12 +944,17 @@ protected void create(){
     exits::create();
     inventory::reset(query_reset_number());
     set_heart_beat(0);
-    if( replaceable(this_object()) && !GetNoReplace() ){
-        string* tmp= inherit_list(this_object());
-        if( sizeof(tmp) == 1 ){
-            replace_program(tmp[0]);
-        }
-    }
+    /* replace_program()'s effect is deferred on FluffOS to a periodic
+     * backend sweep rather than applied synchronously at the end of the
+     * current call, so any closure created on a "pending replace" object
+     * (e.g. eventHearTalk()'s TALK_AREA filter() closure below) hard-errors
+     * with "cannot bind a functional to an object with a pending
+     * replace_program()" for roughly the first few minutes after this room
+     * loads, until that sweep runs. This is a pure memory
+     * micro-optimization with no functional effect once it does apply --
+     * drop it entirely rather than try to work around the closure timing.
+     * SetNoReplace()/GetNoReplace() are left in place as harmless
+     * now-unused API. */
 }
 
 int eventDestruct(){
