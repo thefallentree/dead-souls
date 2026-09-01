@@ -18,7 +18,7 @@ void create() {
              "road" : "Boc La Road."]) );
     SetExits( ([ "south" : "/domains/Praxis/e_boc_la2",
                 "north" : "/domains/Praxis/storage" ]) );
-    set_pre_exit_functions( ({ "north" }), ({ "go_north" }) );
+    //set_pre_exit_functions( ({ "north" }), ({ "go_north" }) );
     add_sky_event( (: "shop_closing" :) );
 }
 
